@@ -12,7 +12,10 @@ class Dot implements IDot {
   }
 
   setCluster(cluster: Cluster) {
+    if(this.cluster) this.cluster.removeDot(this)
+
     this.cluster = cluster
+    cluster.addDot(this)
   }
 
   getCluster() {

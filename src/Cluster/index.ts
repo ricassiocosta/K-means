@@ -3,6 +3,7 @@ import { IDot } from "../Dot/IDot";
 
 class Cluster {
   private centroid: IDot;
+  private dots: Dot[] = [];
 
   constructor(coordX: number, coordY: number) {
     const centroid: IDot = {
@@ -17,6 +18,19 @@ class Cluster {
     return this.centroid
   }
 
+  addDot(dot: Dot) {
+    this.dots.push(dot)
+  }
+
+  removeDot(dot: Dot) {
+    const dotIndex = this.dots.indexOf(dot)
+    this.dots.splice(dotIndex, 1)
+  }
+
+  getDots(): IDot[] {
+    return this.dots
+  }
+
   getDistance(dot: Dot): number {
     return Math.sqrt(
         Math.pow(this.centroid.coordX-dot.coordX, 2) +
@@ -24,7 +38,9 @@ class Cluster {
     )
   }
 
-  repositionCentroid(dots: IDot[]): IDot {
+  repositionCentroid(): void {
+    const dots = this.getDots()
+
     const dot = dots.reduce((previousValue: IDot, currentValue: IDot): IDot => {
         const sumCoordX = previousValue.coordX + currentValue.coordX;
         const sumCoordY = previousValue.coordY + currentValue.coordY;
@@ -36,8 +52,6 @@ class Cluster {
     dot.coordY /= dots.length;
 
     this.centroid = dot;
-
-		return dot;
 	}
 }
 
