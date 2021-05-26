@@ -5,21 +5,18 @@ import { sample } from "lodash"
 const kmeans = (dataset: Dot[], clustersAmount: number): Dot[] => {
   const clusters: Cluster[] = [];
 
-  /* for (let index = 0; index < clustersAmount; index++) {
+  for (let index = 0; index < clustersAmount; index++) {
     const dot = sample(dataset) as Dot;
+    console.log("dot chosen: ", dot)
     const newCluster = new Cluster(dot.coordX, dot.coordY);
-
     clusters.push(newCluster);
-  } */
-
-  const newCluster1 = new Cluster(2.5, 2.1)
-  const newCluster2 = new Cluster(2.8, 0.8)
-  clusters.push(newCluster1)
-  clusters.push(newCluster2)
+  }
 
   let hasChanges: boolean;
+  let iterationCount = 0;
   do {
     hasChanges = false
+    iterationCount++
     for (const dot of dataset) {
       if(!dot.getCluster()) dot.setCluster(clusters[0]);
 
@@ -37,6 +34,9 @@ const kmeans = (dataset: Dot[], clustersAmount: number): Dot[] => {
     }
 
     if(!hasChanges) {
+      console.log("number of iterations: ", iterationCount)
+      console.log("clusters: ", clusters)
+
       return dataset;
     }
 
