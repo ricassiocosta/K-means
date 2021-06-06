@@ -22,9 +22,15 @@ const kmeans = (dataset: Dot[], clustersAmount: number): Cluster[] => {
   do {
     hasChanges = false
     iterationCount++
+    // TODO: refatorar este trecho!!esta função precisa retornar dados
+    // de forma a possibilitar uma visualização do histórico dos dados
+    // durante as iterações.
     for (const dot of dataset) {
+      // remover esta inferência de cluster, calcular baseado na posição
+      // do dot
       if(!dot.getCluster()) dot.setCluster(clusters[0]);
 
+      // remover este for dentro de for
       for (const cluster of clusters) {
         const distance = cluster.getDistance(dot);
 
