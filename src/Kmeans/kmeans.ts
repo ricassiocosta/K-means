@@ -5,7 +5,12 @@ import { sample } from "lodash"
 const generateRandomClusters = (dataset: Dot[], clustersAmount: number): Cluster[] => {
   const clusters: Cluster[] = []
   for (let index = 0; index < clustersAmount; index++) {
-    const dot = sample(dataset) as Dot;
+    // FIX: Este 'sample' pode retornar 2 valores iguais neste for.
+    const dot = sample(dataset);
+    if (!dot) {
+      throw new Error('failed to get a random dot from dataset')
+    }
+
     console.log("dot chosen: ", dot)
     const newCluster = new Cluster(dot.coordX, dot.coordY);
     clusters.push(newCluster);
@@ -13,7 +18,24 @@ const generateRandomClusters = (dataset: Dot[], clustersAmount: number): Cluster
 
   return clusters
 }
+/*
 
+interface IKmeans {
+  iterations: number;
+  history: [
+    Cluster[]
+  ]
+}
+
+{
+  iterations: 3
+  history: [
+    [estado na primeira passada],
+    [estado na segunda passada]
+  ]
+}
+
+*/
 const kmeans = (dataset: Dot[], clustersAmount: number): Cluster[] => {
   const clusters: Cluster[] = generateRandomClusters(dataset, clustersAmount);
 
@@ -25,6 +47,8 @@ const kmeans = (dataset: Dot[], clustersAmount: number): Cluster[] => {
     // TODO: refatorar este trecho!!esta função precisa retornar dados
     // de forma a possibilitar uma visualização do histórico dos dados
     // durante as iterações.
+
+    // extrair essa função
     for (const dot of dataset) {
       // remover esta inferência de cluster, calcular baseado na posição
       // do dot
@@ -34,6 +58,7 @@ const kmeans = (dataset: Dot[], clustersAmount: number): Cluster[] => {
       for (const cluster of clusters) {
         const distance = cluster.getDistance(dot);
 
+        // FIX: validar ao invés de inferir
         const currentCluster = dot.getCluster() as Cluster;
         const currentClusterDistance = currentCluster.getDistance(dot);
 
