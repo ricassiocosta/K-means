@@ -2,15 +2,20 @@ import { Cluster } from "../Cluster"
 import { Dot } from "../Dot"
 import { sample } from "lodash"
 
-const kmeans = (dataset: Dot[], clustersAmount: number): Dot[] => {
-  const clusters: Cluster[] = [];
-
+const generateRandomClusters = (dataset: Dot[], clustersAmount: number): Cluster[] => {
+  const clusters: Cluster[] = []
   for (let index = 0; index < clustersAmount; index++) {
     const dot = sample(dataset) as Dot;
     console.log("dot chosen: ", dot)
     const newCluster = new Cluster(dot.coordX, dot.coordY);
     clusters.push(newCluster);
   }
+
+  return clusters
+}
+
+const kmeans = (dataset: Dot[], clustersAmount: number): Cluster[] => {
+  const clusters: Cluster[] = generateRandomClusters(dataset, clustersAmount);
 
   let hasChanges: boolean;
   let iterationCount = 0;
@@ -35,9 +40,7 @@ const kmeans = (dataset: Dot[], clustersAmount: number): Dot[] => {
 
     if(!hasChanges) {
       console.log("number of iterations: ", iterationCount)
-      console.log("clusters: ", clusters)
-
-      return dataset;
+      return clusters;
     }
 
     clusters.map(cluster => {
@@ -45,7 +48,7 @@ const kmeans = (dataset: Dot[], clustersAmount: number): Dot[] => {
     })
   } while (hasChanges);
 
-  return dataset;
+  return clusters;
 }
 
 export { kmeans }
