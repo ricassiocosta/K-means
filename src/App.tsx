@@ -1,6 +1,7 @@
 import React from 'react';
-import { CartesianGrid, Scatter, ScatterChart, Tooltip, XAxis, YAxis, ZAxis } from 'recharts';
+import { CartesianGrid, Scatter, ScatterChart, XAxis, YAxis } from 'recharts';
 import { clusteredData } from './Kmeans';
+import { getGeneratedColors, getRandomColor } from './utils/getRandomColor';
 
 function App() {
   console.log("------------")
@@ -20,16 +21,14 @@ function App() {
         <CartesianGrid />
         <XAxis type="number" dataKey="x" />
         <YAxis type="number" dataKey="y"/>
-        <ZAxis type="number" dataKey="z" range={[100, 150]}/>
-        <Tooltip cursor={{ strokeDasharray: "3 3" }} />
         {
           clusteredData.map((cluster, index: number) => {
-            return <Scatter name="Cluster" data={cluster.getDots()} shape="triangle" />
+            return <Scatter name="Cluster" data={cluster.getDots()} fill={getRandomColor()} shape="circle" />
           })
         }
         {
           clusteredData.map((cluster, index: number) => {
-            return <Scatter name="Centroid" data={[cluster.getCentroid()]} shape="wye"/>
+            return <Scatter name="Centroid" data={[cluster.getCentroid()]} fill={getGeneratedColors()} shape="triangle"/>
           })
         }
       </ScatterChart>
