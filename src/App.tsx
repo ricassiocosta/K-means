@@ -1,5 +1,5 @@
 import React from 'react';
-import { CartesianGrid, Scatter, ScatterChart, XAxis, YAxis } from 'recharts';
+import { CartesianGrid, Scatter, ScatterChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { clusteredData } from './Kmeans';
 import { getGeneratedColors, getRandomColor } from './utils/getRandomColor';
 
@@ -21,15 +21,16 @@ function App() {
         <CartesianGrid />
         <XAxis type="number" dataKey="x" />
         <YAxis type="number" dataKey="y"/>
+        <Tooltip cursor={{ strokeDasharray: "3 3" }} />
         {
-          clusteredData.map((cluster, index: number) => {
-            return <Scatter name="Cluster" data={cluster.getDots()} fill={getRandomColor()} shape="circle" />
-          })
+          clusteredData.map(cluster => (
+            <Scatter name="Cluster" data={cluster.getDots()} fill={getRandomColor()} shape="circle" />
+          ))
         }
         {
-          clusteredData.map((cluster, index: number) => {
-            return <Scatter name="Centroid" data={[cluster.getCentroid()]} fill={getGeneratedColors()} shape="triangle"/>
-          })
+          clusteredData.map(cluster => (
+            <Scatter name="Centroid" data={[cluster.getCentroid()]} fill={getGeneratedColors()} shape="triangle"/>
+          ))
         }
       </ScatterChart>
     </>
