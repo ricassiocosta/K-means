@@ -12,7 +12,7 @@ const generateRandomClusters = (dataset: Dot[], clustersAmount: number): Cluster
     }
 
     console.log("dot chosen: ", dot)
-    const newCluster = new Cluster(dot.coordX, dot.coordY);
+    const newCluster = new Cluster(dot.x, dot.y);
     clusters.push(newCluster);
   }
 

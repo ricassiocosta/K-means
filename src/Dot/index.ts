@@ -2,13 +2,13 @@ import { Cluster } from "../Cluster";
 import { IDot } from "./IDot";
 
 class Dot implements IDot {
-  coordX: number;
-  coordY: number;
+  x: number;
+  y: number;
   private cluster?: Cluster;
 
-  constructor(coordX: number, coordY: number) {
-    this.coordX = coordX;
-    this.coordY = coordY;
+  constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
   }
 
   setCluster(cluster: Cluster) {

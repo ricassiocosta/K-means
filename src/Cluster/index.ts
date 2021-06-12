@@ -5,10 +5,10 @@ class Cluster {
   private centroid: IDot;
   private dots: Dot[] = [];
 
-  constructor(coordX: number, coordY: number) {
+  constructor(x: number, y: number) {
     const centroid: IDot = {
-      coordX,
-      coordY
+      x,
+      y
     }
 
     this.centroid = centroid
@@ -33,8 +33,8 @@ class Cluster {
 
   getDistance(dot: Dot): number {
     return Math.sqrt(
-        Math.pow(this.centroid.coordX-dot.coordX, 2) +
-        Math.pow(this.centroid.coordY-dot.coordY, 2)
+        Math.pow(this.centroid.x-dot.x, 2) +
+        Math.pow(this.centroid.y-dot.y, 2)
     )
   }
 
@@ -42,14 +42,14 @@ class Cluster {
     const dots = this.getDots()
 
     const dot = dots.reduce((previousValue: IDot, currentValue: IDot): IDot => {
-        const sumCoordX = previousValue.coordX + currentValue.coordX;
-        const sumCoordY = previousValue.coordY + currentValue.coordY;
+        const sumCoordX = previousValue.x + currentValue.x;
+        const sumCoordY = previousValue.y + currentValue.y;
 
-        return { coordX: sumCoordX, coordY: sumCoordY }
+        return { x: sumCoordX, y: sumCoordY }
     })
 
-    dot.coordX /= dots.length;
-    dot.coordY /= dots.length;
+    dot.x /= dots.length;
+    dot.y /= dots.length;
 
     this.centroid = dot;
 	}

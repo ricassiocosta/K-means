@@ -1,6 +1,6 @@
 interface IDot {
-  coordX: number;
-  coordY: number;
+  x: number;
+  y: number;
 }
 
 export type { IDot }
