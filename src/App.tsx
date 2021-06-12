@@ -66,11 +66,11 @@ function App() {
         </ScatterChart>
         <ButtonsContainer>
           {kmeans.history && iteration > 1 && (
-            <Button onClick={previousIteration}>Previous Iteration</Button>
+            <Button onClick={previousIteration}>Iteração anterior</Button>
           )}
 
           {kmeans.history && iteration < kmeans.history.length && (
-            <Button onClick={nextIteration}>Next Iteration</Button>
+            <Button onClick={nextIteration}>Próxima iteração</Button>
           )}
         </ButtonsContainer>
     </Container>

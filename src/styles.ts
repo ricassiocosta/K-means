@@ -15,8 +15,17 @@ export const ButtonsContainer = styled.div`
 `;
 
 export const Button = styled.button`
-  width: 120px;
-  height: 50px;
+  width: 130px;
+  height: 40px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  background-color: #ddd;
+  box-shadow: 1px 1px 3px #888888;
+
+  :hover {
+    background-color: #eee;
+  }
 `;
 
 export const Title = styled.h1`
