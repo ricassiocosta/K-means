@@ -4,14 +4,17 @@ import { sample, cloneDeep } from "lodash"
 
 const generateRandomClusters = (dataset: Dot[], clustersAmount: number): Cluster[] => {
   const clusters: Cluster[] = []
+  const possibleChoices = [...dataset]
   for (let index = 0; index < clustersAmount; index++) {
-    // FIX: Este 'sample' pode retornar 2 valores iguais neste for.
-    const dot = sample(dataset);
-    if (!dot) {
+    const chosenDot = sample(possibleChoices)
+    if (!chosenDot) {
       throw new Error('failed to get a random dot from dataset')
     }
 
-    const newCluster = new Cluster(dot.x, dot.y);
+    const dotIndex = possibleChoices.indexOf(chosenDot)
+    possibleChoices.splice(dotIndex, 1)
+
+    const newCluster = new Cluster(chosenDot.x, chosenDot.y);
     clusters.push(newCluster);
   }
 
@@ -20,7 +23,7 @@ const generateRandomClusters = (dataset: Dot[], clustersAmount: number): Cluster
 
 interface IKmeans {
   iterations: number;
-  history: [
+  history?: [
     Cluster[]
   ]
 }
@@ -30,9 +33,6 @@ const kmeans = (dataset: Dot[], clustersAmount: number): IKmeans => {
 
   const kmeans: IKmeans = {
     iterations: 0,
-    history: [
-      cloneDeep(clusters)
-    ]
   }
 
   let hasChanges: boolean;
@@ -62,7 +62,11 @@ const kmeans = (dataset: Dot[], clustersAmount: number): IKmeans => {
       }
     }
 
-    kmeans.history.push(cloneDeep(clusters))
+    if(kmeans.history) {
+      kmeans.history.push(cloneDeep(clusters))
+    } else {
+      kmeans.history = [cloneDeep(clusters)]
+    }
 
     if(!hasChanges) {
       return kmeans;

@@ -1,15 +1,13 @@
 import React from 'react';
 import { CartesianGrid, Scatter, ScatterChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { kmeans } from './Kmeans';
-import { getGeneratedColors, getRandomColor } from './utils/getRandomColor';
+import { getColor } from './utils/getColor';
 
 function App() {
-  console.log("------------")
-  console.log(kmeans)
   return (
     <>
       {
-        kmeans.history.map((clusteredData) => (
+        kmeans.history && kmeans.history.map((clusteredData) => (
           <ScatterChart
             width={400}
             height={400}
@@ -25,13 +23,13 @@ function App() {
               <YAxis type="number" dataKey="y"/>
               <Tooltip cursor={{ strokeDasharray: "3 3" }} />
               {
-                clusteredData.map(cluster => (
-                  <Scatter name="Cluster" data={cluster.getDots()} fill={getRandomColor()} shape="circle" />
+                clusteredData.map((cluster, index) => (
+                  <Scatter name="Cluster" data={cluster.getDots()} fill={getColor(index)} shape="circle" />
                 ))
               }
               {
-                clusteredData.map(cluster => (
-                  <Scatter name="Centroid" data={[cluster.getCentroid()]} fill={getGeneratedColors()} shape="triangle"/>
+                clusteredData.map((cluster, index) => (
+                  <Scatter name="Centroid" data={[cluster.getCentroid()]} fill={getColor(index)} shape="triangle"/>
                 ))
               }
             </ScatterChart>
