@@ -1,6 +1,6 @@
 import { Cluster } from "../Cluster"
 import { Dot } from "../Dot"
-import { sample } from "lodash"
+import { sample, cloneDeep } from "lodash"
 
 const generateRandomClusters = (dataset: Dot[], clustersAmount: number): Cluster[] => {
   const clusters: Cluster[] = []
@@ -11,14 +11,12 @@ const generateRandomClusters = (dataset: Dot[], clustersAmount: number): Cluster
       throw new Error('failed to get a random dot from dataset')
     }
 
-    console.log("dot chosen: ", dot)
     const newCluster = new Cluster(dot.x, dot.y);
     clusters.push(newCluster);
   }
 
   return clusters
 }
-/*
 
 interface IKmeans {
   iterations: number;
@@ -27,23 +25,20 @@ interface IKmeans {
   ]
 }
 
-{
-  iterations: 3
-  history: [
-    [estado na primeira passada],
-    [estado na segunda passada]
-  ]
-}
-
-*/
-const kmeans = (dataset: Dot[], clustersAmount: number): Cluster[] => {
+const kmeans = (dataset: Dot[], clustersAmount: number): IKmeans => {
   const clusters: Cluster[] = generateRandomClusters(dataset, clustersAmount);
 
+  const kmeans: IKmeans = {
+    iterations: 0,
+    history: [
+      cloneDeep(clusters)
+    ]
+  }
+
   let hasChanges: boolean;
-  let iterationCount = 0;
   do {
     hasChanges = false
-    iterationCount++
+    kmeans.iterations++
     // TODO: refatorar este trecho!!esta função precisa retornar dados
     // de forma a possibilitar uma visualização do histórico dos dados
     // durante as iterações.
@@ -67,9 +62,10 @@ const kmeans = (dataset: Dot[], clustersAmount: number): Cluster[] => {
       }
     }
 
+    kmeans.history.push(cloneDeep(clusters))
+
     if(!hasChanges) {
-      console.log("number of iterations: ", iterationCount)
-      return clusters;
+      return kmeans;
     }
 
     clusters.map(cluster => {
@@ -77,7 +73,7 @@ const kmeans = (dataset: Dot[], clustersAmount: number): Cluster[] => {
     })
   } while (hasChanges);
 
-  return clusters;
+  return kmeans;
 }
 
 export { kmeans }

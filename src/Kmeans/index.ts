@@ -20,4 +20,4 @@ for (const data of dataset) {
 
 const clusteredData = kmeans(dots, 2)
 
-export { clusteredData }
+export { clusteredData as kmeans }
