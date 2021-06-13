@@ -4,6 +4,7 @@ import { Cluster } from './Cluster';
 import { kmeans } from './Kmeans';
 import { Button, ButtonsContainer, Container, SubTitle, Title } from './styles';
 import { getColor } from './utils/getColor';
+import { getRandomKey } from './utils/getRandomKey';
 
 function App() {
   const [selectedIteration, setSelectedIteration] = useState<Cluster[]>([])
@@ -55,12 +56,12 @@ function App() {
           <Tooltip cursor={{ strokeDasharray: "3 3" }} />
           {
             selectedIteration.map((cluster, index) => (
-              <Scatter name="Cluster" data={cluster.getDots()} fill={getColor(index)} shape="circle" />
+              <Scatter key={getRandomKey()} name="Cluster" data={cluster.getDots()} fill={getColor(index)} shape="circle" />
             ))
           }
           {
             selectedIteration.map((cluster, index) => (
-              <Scatter name="Centroid" data={[cluster.getCentroid()]} fill={getColor(index)} shape="triangle" />
+              <Scatter key={getRandomKey()} name="Centroid" data={[cluster.getCentroid()]} fill={getColor(index)} shape="triangle" />
             ))
           }
         </ScatterChart>
