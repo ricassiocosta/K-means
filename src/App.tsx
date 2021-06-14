@@ -7,32 +7,32 @@ import { getColor } from './utils/getColor';
 import { getRandomKey } from './utils/getRandomKey';
 
 function App() {
-  const [selectedIteration, setSelectedIteration] = useState<Cluster[]>([])
-  const [iteration, setIteration] = useState(1)
+  const [selectedIteration, setSelectedIteration] = useState<Cluster[]>([]);
+  const [iteration, setIteration] = useState(1);
 
   useEffect(() => {
     if(kmeans.history) {
-      setSelectedIteration(kmeans.history[0])
+      setSelectedIteration(kmeans.history[0]);
     }
   }, [])
 
   function nextIteration() {
     if(kmeans.history) {
-      let selectedIterationIndex = kmeans.history.indexOf(selectedIteration)
-      const nextIterationIndex = selectedIterationIndex + 1
-      const nextIteration = kmeans.history[nextIterationIndex]
-      setSelectedIteration(nextIteration)
-      setIteration(iteration + 1)
+      let selectedIterationIndex = kmeans.history.indexOf(selectedIteration);
+      const nextIterationIndex = selectedIterationIndex + 1;
+      const nextIteration = kmeans.history[nextIterationIndex];
+      setSelectedIteration(nextIteration);
+      setIteration(iteration + 1);
     }
   }
 
   function previousIteration() {
     if(kmeans.history) {
-      let selectedIterationIndex = kmeans.history.indexOf(selectedIteration)
-      const previousIterationIndex = selectedIterationIndex - 1
-      const nextIteration = kmeans.history[previousIterationIndex]
-      setSelectedIteration(nextIteration)
-      setIteration(iteration - 1)
+      let selectedIterationIndex = kmeans.history.indexOf(selectedIteration);
+      const previousIterationIndex = selectedIterationIndex - 1;
+      const nextIteration = kmeans.history[previousIterationIndex];
+      setSelectedIteration(nextIteration);
+      setIteration(iteration - 1);
     }
   }
 

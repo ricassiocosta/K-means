@@ -9,43 +9,43 @@ class Cluster {
     const centroid: IDot = {
       x,
       y
-    }
+    };
 
-    this.centroid = centroid
+    this.centroid = centroid;
   }
 
   getCentroid (): IDot {
-    return this.centroid
+    return this.centroid;
   }
 
   addDot(dot: Dot) {
-    this.dots.push(dot)
+    this.dots.push(dot);
   }
 
   removeDot(dot: Dot) {
-    const dotIndex = this.dots.indexOf(dot)
-    this.dots.splice(dotIndex, 1)
+    const dotIndex = this.dots.indexOf(dot);
+    this.dots.splice(dotIndex, 1);
   }
 
   getDots(): IDot[] {
-    return this.dots
+    return this.dots;
   }
 
   getDistance(dot: Dot): number {
     return Math.sqrt(
         Math.pow(this.centroid.x-dot.x, 2) +
         Math.pow(this.centroid.y-dot.y, 2)
-    )
+    );
   }
 
   repositionCentroid(): void {
-    const dots = this.getDots()
+    const dots = this.getDots();
 
     const dot = dots.reduce((previousValue: IDot, currentValue: IDot): IDot => {
         const sumCoordX = previousValue.x + currentValue.x;
         const sumCoordY = previousValue.y + currentValue.y;
 
-        return { x: sumCoordX, y: sumCoordY }
+        return { x: sumCoordX, y: sumCoordY };
     })
 
     dot.x /= dots.length;
